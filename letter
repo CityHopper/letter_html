@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        :root {
+            --color-strong: #ff393c;
+            --color-medium: #ff5355;
+            --color-light: #ff8789;
+            --color-gray: #798992;
+            --color-white: #dedede;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #302929;
+        }
+
+        .envelope-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: var(--color-light);
+            position: relative;
+            transform-style: preserve-3d;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* right side*/
+        .envelope:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-left: 140px solid transparent;
+            border-right: 150px solid var(--color-strong);
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid var(--color-strong);
+            z-index: 5; /* cascading sort*/
+            border-bottom-right-radius: 10px;
+        }
+
+        /* left*/
+        .envelope:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 150px solid var(--color-medium);
+            border-right: 140px solid transparent;
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid var(--color-medium);
+            z-index: 4;
+            border-bottom-left-radius: 10px;
+        }
+
+        .envelope__recipient:before {
+            content: "To. ";
+        }
+
+        .envelope__recipient {
+            position: absolute;
+            right: 5%;
+            bottom: 10%;
+            z-index: 7;
+            font-size: 14px;
+            color: var(--color-white);
+            width: max-content;
+        }
+
+        .envelope__cover:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid var(--color-light);
+            border-bottom: 100px solid transparent;
+            z-index: 6;
+            transform-origin: top;
+            transform: rotateX(0deg);
+            transition: all 1s 1s ease;
+        }
+
+        .envelope__letter { /* 편지지 */
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            z-index: 3;
+            top: 0;
+            left: 10px;
+            background: var(--color-white);
+            width: 280px;
+            height: 180px;
+            border-radius: 20px;
+            transition: all 1s ease;
+        }
+
+        .envelope__letter strong { /* 열어 보기 */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: var(--color-gray);
+            font-weight: 900;
+        }
+
+        .envelope:hover .envelope__cover:before {
+            transform: rotateX(180deg);
+            transition: all 1s ease;
+            z-index: -1;
+        }
+
+        .envelope:hover .envelope__letter {
+            top: -80px; /* 편지지 위로 올리기 */
+            transition: all 1s 1s ease;
+        }
+
+
+        .absolute {
+            position: absolute;
+        }
+
+        input,
+        textarea {
+            font-family: "Homemade Apple";
+            background: transparent;
+            border: none;
+        }
+
+        input {
+            margin-left: 10px;
+            width: 240px;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            padding: 5px;
+        }
+
+        .postcard {
+            display: none;
+            position: relative;
+            width: 80vw;
+            height: 80vh;
+            margin: 10vw;
+            /*background: */
+            font-family: "MedievalSharp";
+            border: 2px solid #ccc;
+            box-shadow: 7px 7px 20px #555;
+            z-index: 8;
+            background-color: var(--color-white);
+            transition: all 1s;
+        }
+        .postcard.active {
+            display: flex;
+        }
+
+        .postcard__sender {
+            right: 40px;
+            top: 235px;
+        }
+
+        .postcard__reply {
+            right: 40px;
+            top: 290px;
+        }
+
+        .postcard__message {
+            left: 25px;
+            top: 100px;
+        }
+
+        .postcard__message p {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 0.7em;
+            background: transparent;
+            letter-spacing: 3px;
+            line-height: 1.5em;
+        }
+
+        .postcard__btn {
+            right: 130px;
+            top: 360px;
+        }
+
+        button {
+            font: 0.6em sans-serif;
+            font-weight: bold;
+            padding: 10px;
+            background: transparent;
+            border: 2px solid black;
+            border-radius: 5px;
+            transform: rotate(-1.5deg);
+        }
+
+        .postcard__btn:hover {
+            background: #ccc;
+            top: 362px;
+        }
+
+        p:focus,
+        input:focus,
+        button:focus {
+            outline-color: #ccc;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="envelope-wrapper">
+    <div class="envelope" id="envelope">
+        <div class="envelope__recipient">강윤희</div>
+        <div class="envelope__cover"></div>
+        <div class="envelope__letter">
+            <strong id="open">
+                열어 보기
+            </strong>
+        </div>
+    </div>
+</div>
+<article class="postcard" id="postcard">
+    <div class="postcard__message absolute">
+        <label for="t-message">To. 강윤희 </label>
+        <br>
+        <p id="t-message">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid in ipsum molestiae porro vitae? Ab beatae deserunt, dignissimos distinctio eveniet magnam, molestias porro quam qui reprehenderit similique soluta voluptas voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti excepturi nemo voluptates? Ad assumenda, blanditiis consectetur distinctio et harum iure laborum libero minus natus necessitatibus optio ratione sapiente temporibus veniam?
+        </p>
+    </div>
+    <div class="postcard__sender absolute">
+        <label for="s-name">From: </label>
+        <input type="text" name="sender-name"
+               id="s-name" placeholder="Geordi LaForge">
+    </div>
+    <div class="postcard__reply absolute">
+        <label for="t-reply">Reply: </label>
+        <input type="text" name="reply-text"
+               id="t-reply" placeholder="Geordi@starfleet.com">
+    </div>
+
+    <div class="postcard__btn absolute">
+        <button name="button" id="close">
+            닫기 >>></button>
+    </div>
+</article>
+
+<script>
+    let envelope = document.getElementById("envelope");
+    let postcard = document.getElementById("postcard");
+    let btnClose = document.getElementById("close")
+    envelope.addEventListener("click", () => {
+        postcard.classList.add("active");
+    })
+    btnClose.addEventListener("click", () => {
+        postcard.classList.remove("active");
+    })
+</script>
+</body>
+</html>
