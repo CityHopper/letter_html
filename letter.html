@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-strong: #ff393c;
-            --color-medium: #ff5355;
-            --color-light: #ff8789;
+            --color-strong: #bbb18b;
+            --color-medium: #d9cfaf;
+            --color-light: #f5edd1;
             --color-gray: #798992;
             --color-white: #dedede;
         }
@@ -18,7 +24,7 @@
         }
 
         body {
-            background: #302929;
+            background: #2b5081;
         }
 
         .envelope-wrapper {
@@ -76,9 +82,11 @@
             right: 5%;
             bottom: 10%;
             z-index: 7;
-            font-size: 14px;
+            font-family: 'Gaegu', cursive;
+            font-size: 20px;
             color: var(--color-white);
             width: max-content;
+            text-shadow: 2px 2px var(--color-gray);
         }
 
         .envelope__cover:before {
@@ -136,66 +144,58 @@
             position: absolute;
         }
 
-        input,
-        textarea {
-            font-family: "Homemade Apple";
-            background: transparent;
-            border: none;
-        }
-
-        input {
-            margin-left: 10px;
-            width: 240px;
-            font-size: 0.8em;
-            letter-spacing: 2px;
-            padding: 5px;
-        }
-
         .postcard {
             display: none;
+            flex-direction: column;
             position: relative;
             width: 80vw;
-            height: 80vh;
-            margin: 10vw;
-            /*background: */
-            font-family: "MedievalSharp";
+            height: max-content;
+            margin: 7vw;
+            padding: 6vw 3vh;
+            font-family: 'Gaegu', cursive;
             border: 2px solid #ccc;
             box-shadow: 7px 7px 20px #555;
             z-index: 8;
             background-color: var(--color-white);
             transition: all 1s;
         }
+
         .postcard.active {
             display: flex;
+            animation: fade-in 1s;
+            animation-fill-mode: forwards;
         }
 
         .postcard__sender {
-            right: 40px;
-            top: 235px;
-        }
-
-        .postcard__reply {
-            right: 40px;
-            top: 290px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 20px;
         }
 
         .postcard__message {
-            left: 25px;
-            top: 100px;
+            margin-bottom: 20px;
         }
 
         .postcard__message p {
             margin-top: 10px;
             padding: 10px;
-            font-size: 0.7em;
+            font-size: 1em;
             background: transparent;
             letter-spacing: 3px;
             line-height: 1.5em;
         }
 
         .postcard__btn {
-            right: 130px;
-            top: 360px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+        }
+
+        .postcard__btn:hover {
+            background: #ccc;
+            top: 16px;
         }
 
         button {
@@ -208,18 +208,19 @@
             transform: rotate(-1.5deg);
         }
 
-        .postcard__btn:hover {
-            background: #ccc;
-            top: 362px;
-        }
-
         p:focus,
-        input:focus,
         button:focus {
             outline-color: #ccc;
         }
 
-
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -235,27 +236,24 @@
     </div>
 </div>
 <article class="postcard" id="postcard">
-    <div class="postcard__message absolute">
-        <label for="t-message">To. 강윤희 </label>
-        <br>
-        <p id="t-message">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid in ipsum molestiae porro vitae? Ab beatae deserunt, dignissimos distinctio eveniet magnam, molestias porro quam qui reprehenderit similique soluta voluptas voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti excepturi nemo voluptates? Ad assumenda, blanditiis consectetur distinctio et harum iure laborum libero minus natus necessitatibus optio ratione sapiente temporibus veniam?
+    <div class="postcard__message">
+        <h3>To. 강윤희 </h3>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid in ipsum molestiae porro vitae? Ab beatae
+            deserunt, dignissimos distinctio eveniet magnam, molestias porro quam qui reprehenderit similique soluta
+            voluptas voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti excepturi nemo
+            voluptates? Ad assumenda, blanditiis consectetur distinctio et harum iure laborum libero minus natus
+            necessitatibus optio ratione sapiente temporibus veniam?
         </p>
     </div>
-    <div class="postcard__sender absolute">
-        <label for="s-name">From: </label>
-        <input type="text" name="sender-name"
-               id="s-name" placeholder="Geordi LaForge">
-    </div>
-    <div class="postcard__reply absolute">
-        <label for="t-reply">Reply: </label>
-        <input type="text" name="reply-text"
-               id="t-reply" placeholder="Geordi@starfleet.com">
-    </div>
 
-    <div class="postcard__btn absolute">
+    <div class="postcard__sender">
+        <h3>From. 강영훈 </h3>
+    </div>
+    <div class="postcard__btn">
         <button name="button" id="close">
-            닫기 >>></button>
+            편지 닫아 버리기
+        </button>
     </div>
 </article>
 
